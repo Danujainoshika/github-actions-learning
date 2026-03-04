@@ -28,23 +28,23 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: 'sample-app/package-lock.json'
+          cache-dependency-path: sample-app/package-lock.json
       
       - name: Install dependencies
         working-directory: ./sample-app
         run: npm ci
       
       - name: Run linter
-        working-directory: ./sample-app
+        working-directory: sample-app
         run: npm run lint
         continue-on-error: true
       
       - name: Build application
-        working-directory: ./sample-app
+        working-directory: sample-app
         run: npm run build
       
       - name: Run tests
-        working-directory: ./sample-app
+        working-directory: sample-app
         run: npm test
       
       - name: Upload coverage reports
@@ -52,12 +52,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report-${{ matrix.node-version }}
-          path: sample-app/coverage/
+          path: sample-app/coverage
           retention-days: 30
       
       - name: Check coverage
         if: always()
-        working-directory: ./sample-app
+        working-directory: sample-app
         run: |
           if [ -f coverage/coverage-summary.json ]; then
             echo "✅ Coverage report generated"
@@ -76,13 +76,13 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: 'sample-app/package-lock.json'
+          cache-dependency-path: sample-app/package-lock.json
       
-      - working-directory: ./sample-app
+      - working-directory: sample-app
         run: npm ci
       
       - name: Run ESLint
-        working-directory: ./sample-app
+        working-directory: sample-app
         run: npm run lint
         continue-on-error: true
 
